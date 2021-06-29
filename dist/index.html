@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script defer src="index.bundle.js"></script><script defer src="print.bundle.js"></script></head>
+<body>
+    <div class="app">
+        <div class="error-popup">
+            <div class="error-popup__msg">Invalid address, please enter a city or a state (Eg: Florida)</div>
+            <button class="error-popup__close-btn">&times;</button>
+        </div>
+
+        <section class="loading-section">
+            <div class="loading-section__content">
+                <h2 class="loading-section__heading">Loading...</h2>
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+        </section>
+
+        <header class="app__header">
+            <div class="current-location">CHICAGO, IL</div>
+            <form class="search-bar">
+                <input class="search-bar__input" type="text" placeholder="Enter a City" aria-label="search"/>
+                <button class="search-bar__submit" aria-label="submit search">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </header>
+
+        <section class="app__current-forecast">
+            <div class="current-forecast__summary">
+                <img src="https://openweathermap.org/img/wn/01d@2x.png" class="forecast__summary__icon"/>
+                <div class="current-details">Overcast</div>
+            </div>
+            <div class="current-forecast__info">
+                <div class="current-forecast__temp"><span>-59</span>&#176;</div>
+
+                <div class="current-forecast__details">
+                    <div class="details-wind">
+                        <span class="material-icons wind">air</span>
+                        <div class="data data-wind">10mph</div>
+                    </div>
+
+                    <div class="details-humidity">
+                        <span class="material-icons">water_drop</span>
+                        <div class="data data-humidity">41%</div>
+                    </div>
+
+                    <div class="details-precipitation">
+                        <span class="material-icons">waves</span>
+                        <div class="data data-precipitation">14%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="app__week-forecast">
+                <ul class="week-forecast__items">
+                    <li class="week-forecast__item week-forecast__item--selected">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Mon</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Tue</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Wed</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Thu</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Fri</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Sat</div>
+                    </li>
+
+                    <li class="week-forecast__item">
+                        <img class="forecast__item__icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="weather icon"/>
+                        <div class="week-forecast__item__temp">-57/-63</div>
+                        <div>Sun</div>
+                    </li>
+                </ul>
+        </section>
+        <section class="temp-info">Temperature in celsius and wind speed in meter/sec</section>
+    </div>
+</body>
+
+<script src="../src/index.js"></script>
+</html>

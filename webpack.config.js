@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template:"./src/index.html",
-      title: 'Weather App',
+      title: 'tic tac toe',
     }),
   ],
   output: {

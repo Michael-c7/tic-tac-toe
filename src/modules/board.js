@@ -6,9 +6,11 @@ let count = 0;
 
 
 export const initBoard = _ => {
-    console.log("hello world");
+    // console.log("hello world");
     resetBoard();
 }
+
+
 
 
 
@@ -31,14 +33,19 @@ board.addEventListener('click', event => {
 });
 
 
+
+
+
 const round = _ => {
-    evaluateBoardForScore()
     playerChoice()
     disablePlayer()
     computerChoice()
-    console.log(count)
-
+    evaluateBoardForScore()
+    // console.log(count)
 }
+
+
+
 
 
 const playerChoice = _ => {
@@ -52,6 +59,10 @@ const playerChoice = _ => {
     count++;
 }
 
+
+
+
+
 const disablePlayer = _ => {
     board.removeEventListener("click", playerChoice);
     /*
@@ -59,6 +70,8 @@ const disablePlayer = _ => {
     & choose a square for 275millseconds or until the computer chooses
     */
 }
+
+
 
 
 
@@ -97,25 +110,45 @@ const computerChoice = _ => {
 
 
 
+/*determine if the current game is a win lose or tie*/
 const evaluateBoardForScore = _ => {
-    /*determine if the current game is a win lose or tie*/
+    
+/*middle tile winner scenario */
+    //1.
+        /*
+        check tile above if it has the circle class
+        check the tile under it if it also has circle class its a win
+        */
+    //2.
+        /*if no win from scenario 1
+        check the left most tile if it has the circle class
+        check the title to the right if it has the circle class
+        thats a win
+        */
 
-    /* Win / lose scenarios
-    1.
-    0 1 1
-    1 0 1
-    1 1 0
+    const middleBoardPieceEvaluation = _ => {
+        let centerPiece = boardPiecesAll[4];
+        let leftSibling = boardPiecesAll[4].previousElementSibling;
+        let rightSibling = boardPiecesAll[4].nextElementSibling;
 
-    2.
-    0 0 0
-    1 1 1
-    1 1 1
+        let topSibling = centerPiece.previousElementSibling.previousElementSibling.previousElementSibling;
+        let bottomSibling = centerPiece.nextElementSibling.nextElementSibling.nextElementSibling;
 
-    3.
-    0 1 1
-    0 1 1
-    0 1 1
+        /*only checking for the palyers class right now,
+        should also check for the computers class as well*/
 
-    know who gets the point basesd on what class the win pattern has
-    */
+        // scenario #1(horizontal)
+        if(centerPiece.classList.contains("board__piece__player--active")
+        && leftSibling.classList.contains("board__piece__player--active")
+        && rightSibling.classList.contains("board__piece__player--active")) {
+            console.log(" horzi winner")
+        // scenario #2(vertical)
+        } else if(centerPiece.classList.contains("board__piece__player--active")
+        && topSibling.classList.contains("board__piece__player--active")
+        && bottomSibling.classList.contains("board__piece__player--active")) {
+            console.log("vert winner")
+        }
+    }
+
+    middleBoardPieceEvaluation()
 }

@@ -24,3 +24,51 @@ initBoard();
 
 5. keep score
 */
+
+
+
+/*how to determine a win*/
+
+/* Win / lose scenarios
+    1.
+    0 1 1
+    1 0 1
+    1 1 0
+
+    2.
+    0 0 0
+    1 1 1
+    1 1 1
+
+    3.
+    0 1 1
+    0 1 1
+    0 1 1
+
+    know who gets the point based on what class the win pattern has
+    */
+
+
+    /*middle tile indexes(from 0) are 1, 4, 7*/
+
+    /*
+    - For middle tiles win situations
+    1. 0 1 0 (left to right / right to left)
+    2.0 (top to bottom / bottom to top)
+      1
+      0
+    */
+
+    /*
+    - for non middle tile win situations
+    1. 1 0 0 (left to right)
+    2. 0 0 1 (right to left)
+
+    3. 1 (top to bottom)
+       0
+       0
+
+    4. 0 (bottom to top)
+       0
+       1
+    */

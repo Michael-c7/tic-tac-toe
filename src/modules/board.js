@@ -2,13 +2,12 @@
 // cache the DOM
 const board = document.querySelector(".board");
 const boardPiecesAll = Array.from(document.querySelector(".board").children);
-// console.log(boardPiecesAll)
-
+let count = 0;
 
 
 export const initBoard = _ => {
     console.log("hello world");
-    // resetBoard();
+    resetBoard();
 }
 
 
@@ -28,13 +27,16 @@ const resetBoard = _ => {
 
 
 board.addEventListener('click', event => {
-    playerChoice()
+    round()
 });
 
 
 const round = _ => {
-    //playerChoice()
-    //computerChoice()
+    evaluateBoardForScore()
+    playerChoice()
+    disablePlayer()
+    computerChoice()
+    console.log(count)
 
 }
 
@@ -42,22 +44,25 @@ const round = _ => {
 const playerChoice = _ => {
     let cloesetLi = event.target.closest("li");
     let cloesetLiIcon = Array.from(event.target.closest("li").children)[0];
-    
+    if(count >= 1) return;
     if(!cloesetLi.classList.contains("board__piece__player--active") && !cloesetLi.classList.contains("board__piece__computer--active")) {
         cloesetLi.classList.add('board__piece__player--active');
         cloesetLiIcon.classList.add("fa-circle-o");
     }
+    count++;
+}
+
+const disablePlayer = _ => {
+    board.removeEventListener("click", playerChoice);
+    /*
+    need to disable the player ability to click
+    & choose a square for 275millseconds or until the computer chooses
+    */
 }
 
 
 
 const computerChoice = _ => {
-    /*STEPS
-    1. get all the available board pieces(up to date)
-    2. randomly choose one(up to date numbers)
-    */
-
-    // let cloesetLi = event.target.closest("li");
     let numsToChooseFrom = [];
     let computerpieceChoiceNum = null;
 
@@ -75,10 +80,42 @@ const computerChoice = _ => {
     let choosenPiece = boardPiecesAll[computerpieceChoiceNum];
     let choosenPieceIcon = Array.from(choosenPiece.children)[0];
 
-    choosenPiece.classList.add('board__piece__computer--active');
-    choosenPieceIcon.classList.add("fa-times");
+    setTimeout(_ => {
+        choosenPiece.classList.add('board__piece__computer--active');
+        choosenPieceIcon.classList.remove("fa-fa-circle-o");
+        choosenPieceIcon.classList.add("fa-times");
+    }, 275);
 
-
+    count--;
 }
 
-computerChoice()
+
+
+
+
+
+
+
+
+const evaluateBoardForScore = _ => {
+    /*determine if the current game is a win lose or tie*/
+
+    /* Win / lose scenarios
+    1.
+    0 1 1
+    1 0 1
+    1 1 0
+
+    2.
+    0 0 0
+    1 1 1
+    1 1 1
+
+    3.
+    0 1 1
+    0 1 1
+    0 1 1
+
+    know who gets the point basesd on what class the win pattern has
+    */
+}

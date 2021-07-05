@@ -30,6 +30,7 @@ const resetBoard = _ => {
 
 board.addEventListener('click', event => {
     round()
+    evaluateBoardForScore(event.target, "board__piece__player--active", "board__piece__computer--active");
 });
 
 
@@ -39,8 +40,8 @@ board.addEventListener('click', event => {
 const round = _ => {
     playerChoice()
     disablePlayer()
+    /*check if theres less than one piece left and dont run if there is*/
     computerChoice()
-    evaluateBoardForScore()
     // console.log(count)
 }
 
@@ -111,20 +112,48 @@ const computerChoice = _ => {
 
 
 /*determine if the current game is a win lose or tie*/
-const evaluateBoardForScore = _ => {
-    
-/*middle tile winner scenario */
-    //1.
-        /*
-        check tile above if it has the circle class
-        check the tile under it if it also has circle class its a win
-        */
-    //2.
-        /*if no win from scenario 1
-        check the left most tile if it has the circle class
-        check the title to the right if it has the circle class
-        thats a win
-        */
+const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
+    let currentRow = currentPiece.getAttribute("data-row");
+    let currentColumn = currentPiece.getAttribute("data-column");
+
+
+    const classContainCheck = (firstPiece, secondPiece, thirdPiece, userClass) => {
+        if(firstPiece.classList.contains(userClass)
+        && secondPiece.classList.contains(userClass)
+        && thirdPiece.classList.contains(userClass)) {
+            console.log("class check winner")
+        }
+    }
+
+
+    const topLeftBoardPieceEvaluation = _ => {
+        let topLeftCornerBoardPiece = boardPiecesAll[0];
+        let topLeftCornerBoardPieceLeft1 = topLeftCornerBoardPiece.nextElementSibling;
+        let topLeftCornerBoardPieceLeft2 = topLeftCornerBoardPieceLeft1.nextElementSibling;
+        let topLeftCornerBoardPieceDown1 = topLeftCornerBoardPieceLeft2.nextElementSibling;
+        let topLeftCornerBoardPieceDown2 = topLeftCornerBoardPieceDown1.nextElementSibling.nextElementSibling.nextElementSibling;
+
+        // top left corner to top right corner
+        classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceLeft1, topLeftCornerBoardPieceLeft2, playerClass);
+
+        // top left corner to bottom left corner
+        classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceDown1, topLeftCornerBoardPieceDown2, playerClass);
+    }
+
+    const bottomRightPieceEvaluation = _ => {
+        let bottomRightBoardPiece = boardPiecesAll[8];
+        let bottomRightBoardPieceLeft1 = bottomRightBoardPiece.previousElementSibling;
+        let bottomRightBoardPieceLeft2 = bottomRightBoardPieceLeft1.previousElementSibling;
+        let bottomRightBoardPieceUp1 = bottomRightBoardPieceLeft2.previousElementSibling;
+        let bottomRightBoardPieceUp2 = bottomRightBoardPieceUp1.previousElementSibling.previousElementSibling.previousElementSibling;
+
+        // bottom right corner to top right corner
+        classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceLeft1, bottomRightBoardPieceLeft2, playerClass);
+
+        // bottom right corner to bottom left corner
+        classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceUp1, bottomRightBoardPieceUp2, playerClass);
+    }
+
 
     const middleBoardPieceEvaluation = _ => {
         let centerPiece = boardPiecesAll[4];
@@ -134,7 +163,14 @@ const evaluateBoardForScore = _ => {
         let topSibling = centerPiece.previousElementSibling.previousElementSibling.previousElementSibling;
         let bottomSibling = centerPiece.nextElementSibling.nextElementSibling.nextElementSibling;
 
-        /*only checking for the palyers class right now,
+        let topLeft = topSibling.previousElementSibling;
+        let bottomRight = bottomSibling.nextElementSibling;
+
+        let topRight = topSibling.nextElementSibling;
+        let bottomLeft = bottomSibling.previousElementSibling;
+
+
+        /*only checking for the player class right now,
         should also check for the computers class as well*/
 
         // scenario #1(horizontal)
@@ -147,8 +183,35 @@ const evaluateBoardForScore = _ => {
         && topSibling.classList.contains("board__piece__player--active")
         && bottomSibling.classList.contains("board__piece__player--active")) {
             console.log("vert winner")
+        // scenario #3 Diagonal(top left to bottom right)
+        } else if(centerPiece.classList.contains("board__piece__player--active")
+        && topLeft.classList.contains("board__piece__player--active")
+        && bottomRight.classList.contains("board__piece__player--active")) {
+            console.log("Diagonal(top left to bottom right) winner")
+        // scenario #4 Diagonal(top right to bottom left)
+        } else if(centerPiece.classList.contains("board__piece__player--active")
+        && topRight.classList.contains("board__piece__player--active")
+        && bottomLeft.classList.contains("board__piece__player--active")) {
+            console.log("Diagonal(top right to bottom left) winner")
         }
     }
 
-    middleBoardPieceEvaluation()
+    const render = _ => {
+        topLeftBoardPieceEvaluation()
+        bottomRightPieceEvaluation()
+        middleBoardPieceEvaluation()
+    }
+
+    render()
 }
+
+
+
+
+/*WHAT TO DO NEXT
+FOR ALL PIECES
+1. check if a side exisits
+(does the side contain the player active class)
+if does not stop.
+if it does check one square over do it again
+ */

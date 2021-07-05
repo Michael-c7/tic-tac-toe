@@ -39,13 +39,23 @@ board.addEventListener('click', event => {
 
 const round = _ => {
     playerChoice()
-    disablePlayer()
-    /*check if theres less than one piece left and dont run if there is*/
+    // disablePlayer()
+
+    /*check if theres less than one piece left
+    and dont computerChoice run if there is*/
     computerChoice()
     // console.log(count)
 }
 
+/*
+check for a tie
+if all the board tiles have either
+board__piece__player--active
+OR
+board__piece__computer--active
 
+return a tie
+*/
 
 
 
@@ -117,90 +127,98 @@ const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
     let currentColumn = currentPiece.getAttribute("data-column");
 
 
-    const classContainCheck = (firstPiece, secondPiece, thirdPiece, userClass) => {
-        if(firstPiece.classList.contains(userClass)
-        && secondPiece.classList.contains(userClass)
-        && thirdPiece.classList.contains(userClass)) {
-            console.log("class check winner")
+    const classContainCheck = (firstPiece, secondPiece, thirdPiece, playerClass, computerClass) => {
+        if(firstPiece.classList.contains(playerClass)
+        && secondPiece.classList.contains(playerClass)
+        && thirdPiece.classList.contains(playerClass)) {
+            return "player";
+        } else if(firstPiece.classList.contains(computerClass)
+        && secondPiece.classList.contains(computerClass)
+        && thirdPiece.classList.contains(computerClass)) {
+            return "computer";
+        } else {
+            // console.log("class check TIE")
         }
     }
+
+
+
+    const winConditionCheck = (condition1, condition2, condition3, condition4) => {
+        if(condition1 === "player" || condition2  === "player" || condition3  === "player" || condition4  === "player") {
+            console.log("player gets a point");
+            // reset game
+        } else if(condition1 === "computer" || condition2  === "computer" || condition3  === "computer" || condition4  === "computer") {
+            console.log("computer gets a point");
+            // reset game
+        }
+    }
+
+
+
 
 
     const topLeftBoardPieceEvaluation = _ => {
-        let topLeftCornerBoardPiece = boardPiecesAll[0];
-        let topLeftCornerBoardPieceLeft1 = topLeftCornerBoardPiece.nextElementSibling;
-        let topLeftCornerBoardPieceLeft2 = topLeftCornerBoardPieceLeft1.nextElementSibling;
-        let topLeftCornerBoardPieceDown1 = topLeftCornerBoardPieceLeft2.nextElementSibling;
-        let topLeftCornerBoardPieceDown2 = topLeftCornerBoardPieceDown1.nextElementSibling.nextElementSibling.nextElementSibling;
+        const topLeftCornerBoardPiece = boardPiecesAll[0];
+        const topLeftCornerBoardPieceLeft1 = topLeftCornerBoardPiece.nextElementSibling;
+        const topLeftCornerBoardPieceLeft2 = topLeftCornerBoardPieceLeft1.nextElementSibling;
+        const topLeftCornerBoardPieceDown1 = topLeftCornerBoardPieceLeft2.nextElementSibling;
+        const topLeftCornerBoardPieceDown2 = topLeftCornerBoardPieceDown1.nextElementSibling.nextElementSibling.nextElementSibling;
 
-        // top left corner to top right corner
-        classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceLeft1, topLeftCornerBoardPieceLeft2, playerClass);
+        // win conditions
+        let topLeftCornerToTopRightCorner = classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceLeft1, topLeftCornerBoardPieceLeft2, playerClass, computerClass);
+        let topLeftCornerToBottomLeftCorner = classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceDown1, topLeftCornerBoardPieceDown2, playerClass, computerClass);
 
-        // top left corner to bottom left corner
-        classContainCheck(topLeftCornerBoardPiece, topLeftCornerBoardPieceDown1, topLeftCornerBoardPieceDown2, playerClass);
+        winConditionCheck(topLeftCornerToTopRightCorner, topLeftCornerToBottomLeftCorner);
     }
+
+
 
     const bottomRightPieceEvaluation = _ => {
-        let bottomRightBoardPiece = boardPiecesAll[8];
-        let bottomRightBoardPieceLeft1 = bottomRightBoardPiece.previousElementSibling;
-        let bottomRightBoardPieceLeft2 = bottomRightBoardPieceLeft1.previousElementSibling;
-        let bottomRightBoardPieceUp1 = bottomRightBoardPieceLeft2.previousElementSibling;
-        let bottomRightBoardPieceUp2 = bottomRightBoardPieceUp1.previousElementSibling.previousElementSibling.previousElementSibling;
+        const bottomRightBoardPiece = boardPiecesAll[8];
+        const bottomRightBoardPieceLeft1 = bottomRightBoardPiece.previousElementSibling;
+        const bottomRightBoardPieceLeft2 = bottomRightBoardPieceLeft1.previousElementSibling;
+        const bottomRightBoardPieceUp1 = bottomRightBoardPieceLeft2.previousElementSibling;
+        const bottomRightBoardPieceUp2 = bottomRightBoardPieceUp1.previousElementSibling.previousElementSibling.previousElementSibling;
 
-        // bottom right corner to top right corner
-        classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceLeft1, bottomRightBoardPieceLeft2, playerClass);
+        // win conditions
+        let bottomRightCornerToTopRightCorner = classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceLeft1, bottomRightBoardPieceLeft2, playerClass, computerClass);
+        let bottomRightCornerToBottomLeftCorner = classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceUp1, bottomRightBoardPieceUp2, playerClass, computerClass);
 
-        // bottom right corner to bottom left corner
-        classContainCheck(bottomRightBoardPiece, bottomRightBoardPieceUp1, bottomRightBoardPieceUp2, playerClass);
+        winConditionCheck(bottomRightCornerToTopRightCorner, bottomRightCornerToBottomLeftCorner);
     }
+
 
 
     const middleBoardPieceEvaluation = _ => {
-        let centerPiece = boardPiecesAll[4];
-        let leftSibling = boardPiecesAll[4].previousElementSibling;
-        let rightSibling = boardPiecesAll[4].nextElementSibling;
-
-        let topSibling = centerPiece.previousElementSibling.previousElementSibling.previousElementSibling;
-        let bottomSibling = centerPiece.nextElementSibling.nextElementSibling.nextElementSibling;
-
-        let topLeft = topSibling.previousElementSibling;
-        let bottomRight = bottomSibling.nextElementSibling;
-
-        let topRight = topSibling.nextElementSibling;
-        let bottomLeft = bottomSibling.previousElementSibling;
+        const centerPiece = boardPiecesAll[4];
+        const leftSibling = boardPiecesAll[4].previousElementSibling;
+        const rightSibling = boardPiecesAll[4].nextElementSibling;
+        const topSibling = centerPiece.previousElementSibling.previousElementSibling.previousElementSibling;
+        const bottomSibling = centerPiece.nextElementSibling.nextElementSibling.nextElementSibling;
+        const topLeft = topSibling.previousElementSibling;
+        const bottomRight = bottomSibling.nextElementSibling;
+        const topRight = topSibling.nextElementSibling;
+        const bottomLeft = bottomSibling.previousElementSibling;
 
 
-        /*only checking for the player class right now,
-        should also check for the computers class as well*/
+        // win conditions
+        let horizontal = classContainCheck(centerPiece, leftSibling, rightSibling, playerClass, computerClass);
+        let vertical = classContainCheck(centerPiece, topSibling, bottomSibling, playerClass, computerClass);
+        let diagonalTopLeftToBottomRight = classContainCheck(centerPiece, topLeft, bottomRight, playerClass, computerClass);
+        let diagonalTopRightToBottomLeft = classContainCheck(centerPiece, topRight, bottomLeft, playerClass, computerClass);
 
-        // scenario #1(horizontal)
-        if(centerPiece.classList.contains("board__piece__player--active")
-        && leftSibling.classList.contains("board__piece__player--active")
-        && rightSibling.classList.contains("board__piece__player--active")) {
-            console.log(" horzi winner")
-        // scenario #2(vertical)
-        } else if(centerPiece.classList.contains("board__piece__player--active")
-        && topSibling.classList.contains("board__piece__player--active")
-        && bottomSibling.classList.contains("board__piece__player--active")) {
-            console.log("vert winner")
-        // scenario #3 Diagonal(top left to bottom right)
-        } else if(centerPiece.classList.contains("board__piece__player--active")
-        && topLeft.classList.contains("board__piece__player--active")
-        && bottomRight.classList.contains("board__piece__player--active")) {
-            console.log("Diagonal(top left to bottom right) winner")
-        // scenario #4 Diagonal(top right to bottom left)
-        } else if(centerPiece.classList.contains("board__piece__player--active")
-        && topRight.classList.contains("board__piece__player--active")
-        && bottomLeft.classList.contains("board__piece__player--active")) {
-            console.log("Diagonal(top right to bottom left) winner")
-        }
+        winConditionCheck(horizontal, vertical, diagonalTopLeftToBottomRight, diagonalTopRightToBottomLeft);
     }
+
+
 
     const render = _ => {
         topLeftBoardPieceEvaluation()
         bottomRightPieceEvaluation()
         middleBoardPieceEvaluation()
     }
+
+
 
     render()
 }

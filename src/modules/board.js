@@ -48,6 +48,15 @@ const round = _ => {
 }
 
 /*
+TODO
+1. figure how to get a tie game
+2. work on the score board
+3. add additonal stuffs
+
+
+
+
+
 check for a tie
 if all the board tiles have either
 board__piece__player--active
@@ -136,8 +145,6 @@ const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
         && secondPiece.classList.contains(computerClass)
         && thirdPiece.classList.contains(computerClass)) {
             return "computer";
-        } else {
-            // console.log("class check TIE")
         }
     }
 
@@ -146,10 +153,12 @@ const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
     const winConditionCheck = (condition1, condition2, condition3, condition4) => {
         if(condition1 === "player" || condition2  === "player" || condition3  === "player" || condition4  === "player") {
             console.log("player gets a point");
-            // reset game
+            // reset board
+            // resetBoard()
         } else if(condition1 === "computer" || condition2  === "computer" || condition3  === "computer" || condition4  === "computer") {
             console.log("computer gets a point");
-            // reset game
+            // reset board
+            // resetBoard()
         }
     }
 
@@ -222,14 +231,3 @@ const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
 
     render()
 }
-
-
-
-
-/*WHAT TO DO NEXT
-FOR ALL PIECES
-1. check if a side exisits
-(does the side contain the player active class)
-if does not stop.
-if it does check one square over do it again
- */

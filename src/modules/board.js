@@ -1,15 +1,14 @@
-
 // cache the DOM
 const board = document.querySelector(".board");
 const boardPiecesAll = Array.from(document.querySelector(".board").children);
 let count = 0;
+let endCount = -1;
 
 
 export const initBoard = _ => {
     // console.log("hello world");
     resetBoard();
 }
-
 
 
 
@@ -27,11 +26,33 @@ const resetBoard = _ => {
 }
 
 
-
 board.addEventListener('click', event => {
     round()
-    evaluateBoardForScore(event.target, "board__piece__player--active", "board__piece__computer--active");
 });
+
+
+
+const observer = new MutationObserver(mutations => {
+    // console.log(mutations)
+    endCount++;
+    // console.log(endCount)
+    if(endCount === boardPiecesAll.length) {
+        // console.log("All done")
+    }
+    evaluateBoardForScore("board__piece__player--active", "board__piece__computer--active");
+});
+
+
+observer.observe(board, {
+    attributes:true,
+    subtree:true,
+    attributeFilter: ["class"]
+})
+
+
+
+
+
 
 
 
@@ -44,27 +65,7 @@ const round = _ => {
     /*check if theres less than one piece left
     and dont computerChoice run if there is*/
     computerChoice()
-    // console.log(count)
 }
-
-/*
-TODO
-1. figure how to get a tie game
-2. work on the score board
-3. add additonal stuffs
-
-
-
-
-
-check for a tie
-if all the board tiles have either
-board__piece__player--active
-OR
-board__piece__computer--active
-
-return a tie
-*/
 
 
 
@@ -85,10 +86,6 @@ const playerChoice = _ => {
 
 const disablePlayer = _ => {
     board.removeEventListener("click", playerChoice);
-    /*
-    need to disable the player ability to click
-    & choose a square for 275millseconds or until the computer chooses
-    */
 }
 
 
@@ -126,15 +123,8 @@ const computerChoice = _ => {
 
 
 
-
-
-
-
 /*determine if the current game is a win lose or tie*/
-const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
-    let currentRow = currentPiece.getAttribute("data-row");
-    let currentColumn = currentPiece.getAttribute("data-column");
-
+const evaluateBoardForScore = (playerClass, computerClass) => {
 
     const classContainCheck = (firstPiece, secondPiece, thirdPiece, playerClass, computerClass) => {
         if(firstPiece.classList.contains(playerClass)
@@ -151,15 +141,44 @@ const evaluateBoardForScore = (currentPiece, playerClass, computerClass) => {
 
 
     const winConditionCheck = (condition1, condition2, condition3, condition4) => {
-        if(condition1 === "player" || condition2  === "player" || condition3  === "player" || condition4  === "player") {
+        let playerWinCondition = condition1 === "player" ||   condition2  === "player" ||   condition3  === "player" ||   condition4  === "player";
+        let computerWinCondition = condition1 === "computer" || condition2  === "computer" || condition3  === "computer" || condition4  === "computer";
+
+        let boardPiecesPlaced = boardPiecesAll.filter(boardPiece => {
+            if(boardPiece.classList.contains(playerClass) || boardPiece.classList.contains(computerClass)) {
+                return boardPiece;
+            }
+        });
+
+
+
+        if(playerWinCondition) {
             console.log("player gets a point");
+            // add point to player score
             // reset board
-            // resetBoard()
-        } else if(condition1 === "computer" || condition2  === "computer" || condition3  === "computer" || condition4  === "computer") {
+            setTimeout(_ => {
+                resetBoard()
+            }, 275);
+        } else if(computerWinCondition) {
             console.log("computer gets a point");
+            // add point to computer score
             // reset board
-            // resetBoard()
+            setTimeout(_ => {
+                resetBoard()
+            }, 275);
+        /*if all the board pieces have been placed
+        and the win condition for the player and the computer
+        have not been triggered theres a tie*/
+        } else if(boardPiecesPlaced.length === boardPiecesAll.length && playerWinCondition === false && computerWinCondition === false) {
+            console.log("there was a TIE!!!!")
+            // add a point to tie
+            // reset the board
+            resetboard()
         }
+        /*Check if every board piece has either
+        playerClass or a computerClass
+        & if all peices do log a tie,
+        resetBoard*/
     }
 
 

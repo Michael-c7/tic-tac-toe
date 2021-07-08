@@ -8,11 +8,15 @@ let playerScore = 0;
 let computerScore = 0;
 let tieScore = 0;
 
+
+
 export let initScoreBoard = _ => {
     $scoreBoardPlayerScore.innerHTML = playerScore;
     $scoreBoardTieScore.innerHTML = tieScore;
     $scoreBoardComputerScore.innerHTML = computerScore;
 }
+
+
 
 export let setScore = (scoreRecipient) => {
     if(scoreRecipient === "player") {

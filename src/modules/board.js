@@ -152,24 +152,19 @@ const evaluateBoardForScore = (playerClass, computerClass) => {
         if(playerWinCondition) {
             console.log("player gets a point");
             setScore("player")
-            setTimeout(_ => {
-                initGameBoard()
-            }, 275);
+            initGameBoard();
         } else if(computerWinCondition) {
             console.log("computer gets a point");
             setScore("computer")
-            setTimeout(_ => {
-                initGameBoard()
-            }, 275);
+            initGameBoard();
         /*if all the board pieces have been placed
         and the win condition for the player and the computer
         have not been triggered theres a tie*/
-        } else if(boardPiecesPlaced.length === boardPiecesAll.length && playerWinCondition === false && computerWinCondition === false) {
+        } else if(boardPiecesPlaced.length === boardPiecesAll.length
+        && playerWinCondition === false && computerWinCondition === false) {
             console.log("there was a TIE!!!!");
             setScore("tie");
-            setTimeout(_ => {
-                initGameBoard()
-            }, 275)
+            initGameBoard();
         }
     }
 

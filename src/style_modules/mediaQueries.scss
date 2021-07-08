@@ -1,0 +1,37 @@
+// width
+@media(max-width:830px) {
+    .app {
+        width:90vw;
+        height:90vh;
+    }
+
+    .board {
+        grid-gap:0.75rem;
+    }
+
+    .board__piece {
+        i {
+            font-size:calc(20vw);
+        }
+    }
+}
+
+
+
+// height
+@media(max-height:830px) {
+    .app {
+        width:90vw;
+        height:90vh;
+    }
+
+    .board {
+        grid-gap:0.75rem;
+    }
+
+    .board__piece {
+        i {
+            font-size:calc(15vh);
+        }
+    }
+}

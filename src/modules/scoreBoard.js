@@ -1,5 +1,4 @@
 /*cache the DOM*/
-let $scoreBoard = document.querySelector(".score-board");
 let $scoreBoardPlayerScore = document.querySelector(".score-board__player-score");
 let $scoreBoardTieScore = document.querySelector(".score-board__tie-score");
 let $scoreBoardComputerScore = document.querySelector(".score-board__computer-score");
@@ -7,6 +6,8 @@ let $scoreBoardComputerScore = document.querySelector(".score-board__computer-sc
 let playerScore = 0;
 let computerScore = 0;
 let tieScore = 0;
+
+
 
 
 

@@ -8,12 +8,13 @@ const boardPiecesAll = Array.from(document.querySelector(".board").children);
 let count = 0;
 
 
+
+
+
 export const initBoard = _ => {
-    // console.log("hello world");
     initScoreBoard();
     initGameBoard();
 }
-
 
 
 
@@ -30,6 +31,7 @@ const initGameBoard = _ => {
 }
 
 
+
 board.addEventListener('click', event => {
     round()
 });
@@ -41,18 +43,12 @@ const observer = new MutationObserver(mutations => {
 });
 
 
+
 observer.observe(board, {
     attributes:true,
     subtree:true,
     attributeFilter: ["class"]
 })
-
-
-
-
-
-
-
 
 
 
@@ -80,13 +76,9 @@ const playerChoice = _ => {
 
 
 
-
-
 const disablePlayer = _ => {
     board.removeEventListener("click", playerChoice);
 }
-
-
 
 
 
@@ -119,8 +111,6 @@ const computerChoice = _ => {
 
 
 
-
-
 /*determine if the current game is a win lose or tie*/
 const evaluateBoardForScore = (playerClass, computerClass) => {
     const classContainCheck = (firstPiece, secondPiece, thirdPiece, playerClass, computerClass) => {
@@ -150,19 +140,19 @@ const evaluateBoardForScore = (playerClass, computerClass) => {
 
 
         if(playerWinCondition) {
-            console.log("player gets a point");
-            setScore("player")
+            // player gets a point
+            setScore("player");
             initGameBoard();
         } else if(computerWinCondition) {
-            console.log("computer gets a point");
-            setScore("computer")
+            // computer gets a point
+            setScore("computer");
             initGameBoard();
         /*if all the board pieces have been placed
         and the win condition for the player and the computer
-        have not been triggered theres a tie*/
+        has not been triggered theres a tie*/
         } else if(boardPiecesPlaced.length === boardPiecesAll.length
         && playerWinCondition === false && computerWinCondition === false) {
-            console.log("there was a TIE!!!!");
+            // there was a tie
             setScore("tie");
             initGameBoard();
         }

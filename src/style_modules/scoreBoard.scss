@@ -1,0 +1,25 @@
+.score-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    text-align: center;
+    font-size:1.5rem;
+}
+
+.score-board__score {
+    padding:0.5rem;
+}
+
+/*active classes*/
+.score-board__player--active {
+    --player-color:#e74c3c;
+    background-color: var(--player-color);
+    color:#fff;
+}
+
+
+.score-board__computer--active {
+    --computer-color:#3498db;
+    background:var(--computer-color);
+    color:#fff;
+}

@@ -1,12 +1,16 @@
+import { scoreBoard,setScore } from "./scoreBoard";
+
+
+
 // cache the DOM
 const board = document.querySelector(".board");
 const boardPiecesAll = Array.from(document.querySelector(".board").children);
 let count = 0;
-let endCount = -1;
 
 
 export const initBoard = _ => {
     // console.log("hello world");
+    scoreBoard();
     resetBoard();
 }
 
@@ -33,12 +37,6 @@ board.addEventListener('click', event => {
 
 
 const observer = new MutationObserver(mutations => {
-    // console.log(mutations)
-    endCount++;
-    // console.log(endCount)
-    if(endCount === boardPiecesAll.length) {
-        // console.log("All done")
-    }
     evaluateBoardForScore("board__piece__player--active", "board__piece__computer--active");
 });
 
@@ -153,16 +151,15 @@ const evaluateBoardForScore = (playerClass, computerClass) => {
 
 
         if(playerWinCondition) {
-            console.log("player gets a point");
+            // console.log("player gets a point");
             // add point to player score
-            // reset board
+            setScore("player", 1);
             setTimeout(_ => {
                 resetBoard()
             }, 275);
         } else if(computerWinCondition) {
             console.log("computer gets a point");
             // add point to computer score
-            // reset board
             setTimeout(_ => {
                 resetBoard()
             }, 275);
@@ -172,13 +169,8 @@ const evaluateBoardForScore = (playerClass, computerClass) => {
         } else if(boardPiecesPlaced.length === boardPiecesAll.length && playerWinCondition === false && computerWinCondition === false) {
             console.log("there was a TIE!!!!")
             // add a point to tie
-            // reset the board
             resetboard()
         }
-        /*Check if every board piece has either
-        playerClass or a computerClass
-        & if all peices do log a tie,
-        resetBoard*/
     }
 
 

@@ -9,18 +9,18 @@ initBoard();
 /*TODO TIC-TAC-TOE(board 3x3)
 1. build the board [X]
     - get what tile / board piece you on w/ class [X]
-    EG: middle piece would be 2/2 2left  & 2 down
+    EG: middle piece would be 2/2 2left  & 2 down [X]
 
 2. be able to place a token (O) onto the board [X]
-    - know when it cant(a piece is already their)
-    - when to end game when all board pieces have token on them
+    - know when it cant(a piece is already their) [x]
+    - when to end game when all board pieces have token on them [x]
 
-2.5 detect a win & add it to the correct player
+2.5 detect a win & add it to the correct player [X]
 
 3. create an AI [X]
 - get all the board pieces w/ NO on them & randomly choose one [X]
 
-4. create a win / tie / lose system
+4. create a win / tie / lose system [X]
 
 5. keep score
 */

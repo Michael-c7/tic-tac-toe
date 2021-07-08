@@ -4,54 +4,35 @@ let $scoreBoardPlayerScore = document.querySelector(".score-board__player-score"
 let $scoreBoardTieScore = document.querySelector(".score-board__tie-score");
 let $scoreBoardComputerScore = document.querySelector(".score-board__computer-score");
 
-export let playerScore = 0;
-export let computerScore = 0;
-export let tieScore = 0;
+let playerScore = 0;
+let computerScore = 0;
+let tieScore = 0;
 
+export let initScoreBoard = _ => {
+    $scoreBoardPlayerScore.innerHTML = playerScore;
+    $scoreBoardTieScore.innerHTML = tieScore;
+    $scoreBoardComputerScore.innerHTML = computerScore;
+}
 
+export let setScore = (scoreRecipient) => {
+    if(scoreRecipient === "player") {
+        playerScore++;
+    } else if(scoreRecipient === "computer") {
+        computerScore++;
+    } else if(scoreRecipient === "tie") {
+        tieScore++;
+    } else {
+        console.error(`Invalid argument for scoreRecipient,
+        It should either be player, computer or tie`);
+    }
 
-
-
-export const scoreBoard = _ => {
     render()
 }
 
 
 
-export let setScore = (scoreRecipient, scoreAmt = 1) => {
-    if(scoreRecipient === "player") {
-        console.log("you got a player score!")
-        playerScore + scoreAmt;
-    } else if(scoreRecipient === "computer") {
-        computerScore + scoreAmt;
-    } else if(scoreRecipient === "tie") {
-        tieScore + scoreAmt;
-    } else {
-        console.error("Invalid scoreRecipient, should be player, computer or tie");
-    }
-}
-
-
-
-let setScoreInDOM = (DOMElement, scoreAmt) => {
-    DOMElement.innerHTML = scoreAmt;
-}
-
-
-
 let render = _ => {
-    setScoreInDOM($scoreBoardPlayerScore, playerScore);
-    setScoreInDOM($scoreBoardTieScore, tieScore);
-    setScoreInDOM($scoreBoardComputerScore, computerScore);
+    $scoreBoardPlayerScore.innerHTML = playerScore;
+    $scoreBoardTieScore.innerHTML = tieScore;
+    $scoreBoardComputerScore.innerHTML = computerScore;
 }
-
-
-
-/*HOW TO
-1. player wins a match, gets point [X]
-
-2. this point is set to a player score variable
-
-3. this player score variable is gets shown in the DOM
-
-*/

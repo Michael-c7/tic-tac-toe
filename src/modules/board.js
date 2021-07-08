@@ -1,4 +1,4 @@
-import { scoreBoard,setScore } from "./scoreBoard";
+import { setScore, initScoreBoard } from "./scoreBoard";
 
 
 
@@ -10,14 +10,14 @@ let count = 0;
 
 export const initBoard = _ => {
     // console.log("hello world");
-    scoreBoard();
-    resetBoard();
+    initScoreBoard();
+    initGameBoard();
 }
 
 
 
 
-const resetBoard = _ => {
+const initGameBoard = _ => {
     boardPiecesAll.forEach(piece => {
         // removes background color & foreground color
         piece.classList.remove("board__piece__player--active");
@@ -123,7 +123,6 @@ const computerChoice = _ => {
 
 /*determine if the current game is a win lose or tie*/
 const evaluateBoardForScore = (playerClass, computerClass) => {
-
     const classContainCheck = (firstPiece, secondPiece, thirdPiece, playerClass, computerClass) => {
         if(firstPiece.classList.contains(playerClass)
         && secondPiece.classList.contains(playerClass)
@@ -151,25 +150,26 @@ const evaluateBoardForScore = (playerClass, computerClass) => {
 
 
         if(playerWinCondition) {
-            // console.log("player gets a point");
-            // add point to player score
-            setScore("player", 1);
+            console.log("player gets a point");
+            setScore("player")
             setTimeout(_ => {
-                resetBoard()
+                initGameBoard()
             }, 275);
         } else if(computerWinCondition) {
             console.log("computer gets a point");
-            // add point to computer score
+            setScore("computer")
             setTimeout(_ => {
-                resetBoard()
+                initGameBoard()
             }, 275);
         /*if all the board pieces have been placed
         and the win condition for the player and the computer
         have not been triggered theres a tie*/
         } else if(boardPiecesPlaced.length === boardPiecesAll.length && playerWinCondition === false && computerWinCondition === false) {
-            console.log("there was a TIE!!!!")
-            // add a point to tie
-            resetboard()
+            console.log("there was a TIE!!!!");
+            setScore("tie");
+            setTimeout(_ => {
+                initGameBoard()
+            }, 275)
         }
     }
 
